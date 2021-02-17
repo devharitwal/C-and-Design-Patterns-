@@ -1,0 +1,105 @@
+using System;
+					
+// creating and interface IBookings  
+interface IBookings
+{
+ void bookingPrice();
+}
+
+// creating interface for ILogin which will be used to implement SRP and decorators   
+interface ILogin
+{
+ void Credentials();
+}
+
+
+// CONCRETE CLASS
+public class  DailyBookings : IBookings
+{
+
+// this class inherits the interface and implements method of the interface 
+ public void bookingPrice()
+{
+ Console.WriteLine("Car Booking Price for honda city vdi is:$100/hr ");
+}
+}
+
+
+// DECORATOR 1
+public class DAirBags : IBookings
+{
+ public void bookingPrice()
+{
+ Console.WriteLine("Honda City VDI with Airbags  : $200/hr");
+}
+}
+// DECORATOR 2
+public class   DAbsDualchanne: IBookings 
+{ 
+
+ public void bookingPrice()
+{
+ Console.WriteLine("Honda City VDI with Dual Channel ABS : $500/hr");
+}
+
+}
+public class UserLogin : ILogin
+{
+ public void Credentials()
+{
+ Console.WriteLine(" Greetings User");
+}
+}
+public class AdminLogin : ILogin
+{
+ public void Credentials()
+{
+ Console.WriteLine("Greetings Admin  ");
+}
+}
+
+public class Program
+{
+public static void Main()
+{
+Console.WriteLine("1) Honda City VDI $100/hr ");
+Console.WriteLine("2) Honda City VDI with SRS Airbags : $200/hr ");
+Console.WriteLine("3) Honda City VDI with DualChannel ABS: $500/hr  ");
+Console.WriteLine("4) User Login  ");
+Console.WriteLine("5) Admin Login ");
+ int choice = Convert.ToInt32(Console.ReadLine());
+switch (choice)
+{
+ case 1:
+//CONCRETE CLASS OBJECT
+		DailyBookings daily_obj = new DailyBookings();
+
+	daily_obj.bookingPrice();
+ break;
+	case 2:
+	// DECORATOR CLASS 1 OBJECT
+
+		 DAirBags d_airbag_obj = new DAirBags();
+		d_airbag_obj.bookingPrice();
+		break;
+	case 3:
+	// DECORATOR CLASS 2 OBJECT
+		DAbsDualchanne dual_channel_obj = new DAbsDualchanne();
+
+	dual_channel_obj.bookingPrice();
+	break;
+	case 4:
+ 	 UserLogin  Ul = new UserLogin();
+	// DECORATOR CLASS 1 OBJECT (MODULE 2)
+Ul.Credentials();
+break;
+case 5:
+ AdminLogin  Al = new AdminLogin();
+// DECORATOR CLASS 2 OBJECT (MODULE 2)
+Al.Credentials();
+break;
+default: Console.WriteLine("No such choice");
+ break;
+ }
+} 
+}
