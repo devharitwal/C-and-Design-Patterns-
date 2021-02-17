@@ -1,0 +1,276 @@
+using System;
+					
+interface IBookings
+{
+ void bookingPrice();
+}
+interface ILogin
+{
+ void Login_Message();
+}
+
+// this is implemented for other decorators 
+// lazy ,profile, async,
+
+
+interface IDetails
+{
+void details();
+}
+
+
+// CONCRETE CLASS
+public class  DailyBookings : IBookings
+{
+ public void bookingPrice()
+{
+ Console.WriteLine("Car Booking Price for honda city vdi is:$100/hr ");
+}
+}
+
+
+// DECORATOR 1  SRP DECORATORS 
+public class DAirBags : IBookings
+{
+ public void bookingPrice()
+{
+ Console.WriteLine("Honda City VDI with Airbags  : $200/hr");
+}
+}
+// DECORATOR 2 SRP DECORATORS
+public class   DAbsDualchanne: IBookings 
+{ 
+
+ public void bookingPrice()
+{
+ Console.WriteLine("Honda City VDI with Dual Channel ABS : $500/hr");
+}
+
+}
+ // DECORATORS 3 SRP DECORATORS
+public class UserLogin : ILogin
+{
+ public void Login_Message()
+{
+ Console.WriteLine(" Greetings User ");
+}
+
+}
+
+// DECORATORS 4 SRP DECORATORS
+public class AdminLogin : ILogin
+{
+ public void Login_Message()
+{
+ Console.WriteLine("Greetings Admin  ");
+}
+}
+
+//DECORATORS 5 PREDICATE  USED FOR DATA HIDING 
+public abstract class Predicate_Decorator_Class
+{
+	public abstract void password();
+	//this is abstract method only be used in abstract classes 
+	
+
+}
+
+//DECORATOR 5 PREDICATE IMPL
+
+public class Predicate_Decorator_Impl : Predicate_Decorator_Class
+{
+
+
+//here we implement the decorated class methods
+public override void password()
+{	
+	Console.WriteLine("This is a predicate  decorator impl  ");
+	
+	// this will run when the user enterrs the right password 
+	
+	
+}
+
+}
+
+//DECORATORS 6  BRANCHING  
+public class Banch_Decorator:  Predicate_Decorator_Impl
+{
+
+	public void password_checker()
+	{
+	//reading the password from the user and checking
+	String key;
+		Console.WriteLine("Enter password to continue");
+		
+	key=Console.ReadLine();
+	Predicate_Decorator_Impl p_d_i_obj = new  Predicate_Decorator_Impl();
+
+		if(key=="dev")
+		{
+		p_d_i_obj.password();
+		
+		Console.WriteLine("This is the branch decorator success ");
+		}
+		else
+		{
+		 Console.WriteLine("No such password");
+		}
+	
+	}
+}
+
+
+
+//DECORATORS 7 LAZY 
+
+
+public class lazy_d:Profile_Decorator_Impl 
+{
+	public void lazy()
+	{
+		details();
+	}
+}
+
+
+
+//DECORATORS 8 PROFILE  THIS IS USED FOR INPUTS FROM USER 
+public class Profile_Decorator_Impl:IDetails
+{
+	public void details()
+	{
+	int fair_price=100;
+	double tax=1.5,sum=0.0;
+
+
+while(sum<500)
+{
+sum=fair_price*tax+sum;
+
+}
+Console.WriteLine("Your  Booking Calculations"+sum);
+
+		
+	}
+
+}
+
+//DECORATORS 9 LOG  
+public class Log_Decorator:IDetails
+{
+	public void details()
+	{
+		String name;
+		int Mobile;
+		Console.WriteLine("enter name");
+		name= Console.ReadLine();
+		Console.WriteLine("ENter mobile ");
+				Mobile= Convert.ToInt32(Console.ReadLine());
+		Console.WriteLine(name);
+		Console.WriteLine(Mobile);
+	}
+
+}
+
+
+
+
+
+//DECORATORS 10 ASYNC 
+
+public class asynchronous_d:Log_Decorator
+{
+public void asyn()
+	{
+		  details();
+	}
+}
+
+
+
+// MAIN CLASSS WITH MAIN METHOD 
+public class Program
+{
+public static void Main()
+{
+Console.WriteLine("1) Honda City VDI $100/hr ");
+Console.WriteLine("2) Honda City VDI with SRS Airbags : $200/hr ");
+Console.WriteLine("3) Honda City VDI with DualChannel ABS: $500/hr  ");
+Console.WriteLine("4) User Login  ");
+Console.WriteLine("5) Admin Login ");
+	Console.WriteLine("(6) Branching ");
+	Console.WriteLine("(7) lazy ");
+	Console.WriteLine("(8) profile ");
+	Console.WriteLine("(9) Log Decorator ");
+	Console.WriteLine("(10) Aync Decorators  ");
+	
+	
+	
+ int choice = Convert.ToInt32(Console.ReadLine());
+switch (choice)
+{
+ case 1:
+//CONCRETE CLASS OBJECT
+		DailyBookings daily_obj = new DailyBookings();
+
+	daily_obj.bookingPrice();
+ break;
+	case 2:
+	// DECORATOR CLASS 1 OBJECT
+
+		 DAirBags d_airbag_obj = new DAirBags();
+		d_airbag_obj.bookingPrice();
+		break;
+	case 3:
+	// DECORATOR CLASS 2 OBJECT
+		DAbsDualchanne dual_channel_obj = new DAbsDualchanne();
+
+	dual_channel_obj.bookingPrice();
+	break;
+	case 4:
+		// DECORATOR CLASS 1 OBJECT (MODULE 2)
+ 	 UserLogin  Ul = new UserLogin();
+	
+Ul.Login_Message();
+break;
+		
+case 5:
+		// DECORATOR CLASS 2 OBJECT (MODULE 2)
+ AdminLogin  Al = new AdminLogin();
+
+Al.Login_Message();
+break;
+		
+		case 6:
+		Banch_Decorator bd=new Banch_Decorator();
+		bd.password_checker();
+		
+		
+		break;
+		case 7:
+		lazy_d lz=new lazy_d();
+		lz.lazy();
+		
+		break;
+		
+		case 8:
+		
+		break;
+	
+	case 9:
+		Log_Decorator log=new Log_Decorator();
+		log.details();
+		break;
+		
+		
+	case 10: 
+		
+		asynchronous_d asy=new asynchronous_d();
+		asy.asyn();		
+		break;	
+	default: Console.WriteLine("No such choice");
+ 	break;
+ }
+} 
+}
